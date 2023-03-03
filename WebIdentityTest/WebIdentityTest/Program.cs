@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using HermeApp.Web.Data;
+using WebIdentityTest.Areas.Identity.Data;
+using WebIdentityTest.Data;
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("HermeAppWebContextConnection") ?? throw new InvalidOperationException("Connection string 'HermeAppWebContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("WebIdentityTestContextConnection") ?? throw new InvalidOperationException("Connection string 'WebIdentityTestContextConnection' not found.");
 
-builder.Services.AddDbContext<HermeAppWebContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<WebIdentityTestContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<HermeAppWebUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<HermeAppWebContext>();
+builder.Services.AddDefaultIdentity<WebIdentityTestUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WebIdentityTestContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using HermeApp.Web.Data;
+using WebDontRemove.Areas.Identity.Data;
+using WebDontRemove.Data;
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("HermeAppWebContextConnection") ?? throw new InvalidOperationException("Connection string 'HermeAppWebContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("WebDontRemoveContextConnection") ?? throw new InvalidOperationException("Connection string 'WebDontRemoveContextConnection' not found.");
 
-builder.Services.AddDbContext<HermeAppWebContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<WebDontRemoveContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<HermeAppWebUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<HermeAppWebContext>();
+builder.Services.AddDefaultIdentity<WebDontRemoveUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<WebDontRemoveContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
