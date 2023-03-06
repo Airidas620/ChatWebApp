@@ -18,5 +18,34 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #202442;
+    margin-bottom: 60px;
+}
+
+.HermesTitle {
+    color: white;
+    text-align: center;
+    font-size: 96px;
+}
+a{
+    color: white;
+}
+#login {
+    color: white;
+}
+.button {
+    margin: 10px;
+}
+.pb-3 {
+    margin: auto;
+    margin-top: 10%;
+    width: 50%;
+}
+.col-md-4 {
+    margin: auto;
+    width: 50%;
+    padding: 30px;
+    background: #2D325A;
+    border: 5px solid;
+    border-color: black;
 }
