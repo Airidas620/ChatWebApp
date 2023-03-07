@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace HermeApp.Web.Migrations
+namespace HermeApp.Service.Migrations
 {
     [DbContext(typeof(HermeAppWebContext))]
-    [Migration("20230303140959_Register")]
-    partial class Register
+    [Migration("20230307154757_InitialDBCreation")]
+    partial class InitialDBCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

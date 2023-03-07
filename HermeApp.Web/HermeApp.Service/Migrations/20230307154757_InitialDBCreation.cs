@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace HermeApp.Web.Migrations
+namespace HermeApp.Service.Migrations
 {
     /// <inheritdoc />
-    public partial class Register : Migration
+    public partial class InitialDBCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

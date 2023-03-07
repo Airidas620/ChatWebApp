@@ -1,10 +1,9 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using HermeApp.Web.Data;
 using HermeApp.Web.Areas.Identity.Data;
+using HermeApp.Web.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("HermeAppWebContextConnection") ?? throw new InvalidOperationException("Connection string 'HermeAppWebContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("LocalConnection") ?? throw new InvalidOperationException("Connection string 'HermeAppWebContextConnection' not found.");
 
 builder.Services.AddDbContext<HermeAppWebContext>(options => options.UseSqlServer(connectionString));
 

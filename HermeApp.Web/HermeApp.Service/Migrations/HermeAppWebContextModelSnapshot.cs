@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace HermeApp.Web.Migrations
+namespace HermeApp.Service.Migrations
 {
     [DbContext(typeof(HermeAppWebContext))]
     partial class HermeAppWebContextModelSnapshot : ModelSnapshot
