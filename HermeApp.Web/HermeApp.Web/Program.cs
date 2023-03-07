@@ -10,6 +10,15 @@ builder.Services.AddDbContext<HermeAppWebContext>(options => options.UseSqlServe
 
 builder.Services.AddDefaultIdentity<HermeAppWebUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<HermeAppWebContext>();
 
+builder.Services.Configure<IdentityOptions>(options => 
+{
+    // User settings
+    options.User.RequireUniqueEmail = true;
+
+    // Sign-in settings
+    options.SignIn.RequireConfirmedAccount = false; 
+});
+
 builder.Services.AddTransient<IUserValidator<HermeAppWebUser>, CustomUsernameEmailPolicy>();
 
 // Add services to the container.
@@ -37,5 +46,6 @@ app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
