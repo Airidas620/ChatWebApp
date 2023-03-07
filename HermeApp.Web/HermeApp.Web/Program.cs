@@ -10,6 +10,8 @@ builder.Services.AddDbContext<HermeAppWebContext>(options => options.UseSqlServe
 
 builder.Services.AddDefaultIdentity<HermeAppWebUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<HermeAppWebContext>();
 
+builder.Services.AddTransient<IUserValidator<HermeAppWebUser>, CustomUsernameEmailPolicy>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
