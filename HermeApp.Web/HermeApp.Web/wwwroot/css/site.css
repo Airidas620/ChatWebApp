@@ -30,8 +30,9 @@ body {
 a{
     color: white;
 }
-#login {
+.default-text {
     color: white;
+    text-align: center;
 }
 .button {
     margin: 10px;
