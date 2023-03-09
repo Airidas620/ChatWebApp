@@ -1,6 +1,6 @@
-﻿using HermeApp.Web.Areas.Identity.Data;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace HermeApp.Web.Data;
 
@@ -11,11 +11,18 @@ public class HermeAppWebContext : IdentityDbContext<HermeAppWebUser>
     {
     }
 
+    public DbSet<Group> Groups { get; set; }
+    public DbSet<Message> Messages { get; set; }
+    public DbSet<UserGroup> UserGroups { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        // Customize the ASP.NET Identity model and override the defaults if needed.
-        // For example, you can rename the ASP.NET Identity table names and more.
-        // Add your customizations after calling base.OnModelCreating(builder);
+
+        builder.Entity<Message>()
+            .HasOne(m => m.Receiver)
+            .WithMany(u => u.ReceivedMessages)
+            .HasForeignKey(m => m.ReceiverId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

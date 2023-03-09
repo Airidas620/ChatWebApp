@@ -1,4 +1,4 @@
-using HermeApp.Web.Areas.Identity.Data;
+using HermeApp;
 using HermeApp.Web.Data;
 using Microsoft.EntityFrameworkCore;
 
