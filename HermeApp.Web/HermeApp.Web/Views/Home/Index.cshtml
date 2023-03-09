@@ -1,8 +1,87 @@
-﻿@{
+﻿@using HermeApp.Web.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+@using HermeApp.Web.AdditionalClasses
+
+
+@inject SignInManager<HermeAppWebUser> SignInManager
+@inject UserManager<HermeAppWebUser> UserManager
+@model UserConnectionTracker
+
+@{
     ViewData["Title"] = "Home page";
+    var userName = @UserManager.GetUserName(User);
 }
 
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <p>You're signed</p>
+        <div class="container">
+
+            <div class="col 2">
+                <div class="col-1">
+                    <ul id="userList"></ul>
+                </div>
+            </div>
+            <div class="col 2">
+                <div class="col-1">
+                    <ul id="groupList"></ul>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-1">
+                    <label id = "userName2">
+                       @userName
+                    </label>
+                </div>
+
+                <div class="col-5"><input type="text" class="w-100" id="groupInput" /></div>
+                <div class="col-1">
+                    <button id="joinGroup">
+                        Join or make a group
+                    </button>
+                </div>
+
+                <div class="col-1">
+                    <label id="asdas">
+                        @Model.GetUserCount()
+                    </label>
+                </div>
+
+                <div class="col-1">
+                    <label id="Testing">
+                        notChanged
+                    </label>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-1">Message</div>
+                <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
+            </div>
+            <div class="row p-1">
+                <div class="col-6 text-end">
+                    <input type="button" id="sendButton" value="Send Message" />
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-6">
+                    <hr />
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-6">
+                    <ul id="messagesList"></ul>
+                </div>
+            </div>
+ 
+        </div>
+    }
+    else
+    {
+        <p>You're not signed</p>
+    }
 </div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>

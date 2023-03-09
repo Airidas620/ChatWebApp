@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using HermeApp.Web.Data;
 using HermeApp.Web.Areas.Identity.Data;
+using HermeApp.Web.Hubs;
+using HermeApp.Web.AdditionalClasses;
+using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("HermeAppWebContextConnection") ?? throw new InvalidOperationException("Connection string 'HermeAppWebContextConnection' not found.");
@@ -10,6 +13,13 @@ builder.Services.AddDbContext<HermeAppWebContext>(options => options.UseSqlServe
 
 builder.Services.AddDefaultIdentity<HermeAppWebUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<HermeAppWebContext>();
 
+builder.Services.AddSignalR();
+
+builder.Services.AddSingleton <HermeApp.Web.AdditionalClasses.IGroupManager, GroupManager>();
+
+builder.Services.AddSingleton<IUserConnectionTracker, UserConnectionTracker>();
+
+builder.Services.AddSingleton<IUserIdProvider, EmailBasedUserIdProvider>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -31,6 +41,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chatHub");
 
 app.MapControllerRoute(
     name: "default",
