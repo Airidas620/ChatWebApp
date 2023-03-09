@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.Identity;
+using HermeApp;
+using HermeApp.Service.Data;
 using Microsoft.EntityFrameworkCore;
 using HermeApp.Web.Data;
 using HermeApp.Web.Areas.Identity.Data;
