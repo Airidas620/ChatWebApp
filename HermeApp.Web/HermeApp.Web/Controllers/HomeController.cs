@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using HermeApp.Web.Models;
-using HermeApp.Web.AdditionalClasses;
+using Microsoft.AspNetCore.Identity;
+using HermeApp.Web.Areas.Identity.Data;
 
 namespace HermeApp.Web.Controllers
 {
@@ -18,7 +19,11 @@ namespace HermeApp.Web.Controllers
 
         public IActionResult Index()
         {
-            return View(userConnectionTracker);
+            if(User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MainPage", "Chat");
+            }
+            return Redirect("/Identity/Account/Login");
         }
 
         public IActionResult Privacy()

@@ -5,6 +5,9 @@ using HermeApp.Web.Areas.Identity.Data;
 using HermeApp.Web.Hubs;
 using HermeApp.Web.AdditionalClasses;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Configuration;
+using HermeApp.Web.Areas.Identity.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("HermeAppWebContextConnection") ?? throw new InvalidOperationException("Connection string 'HermeAppWebContextConnection' not found.");
@@ -20,6 +23,20 @@ builder.Services.AddSingleton <HermeApp.Web.AdditionalClasses.IGroupManager, Gro
 builder.Services.AddSingleton<IUserConnectionTracker, UserConnectionTracker>();
 
 builder.Services.AddSingleton<IUserIdProvider, EmailBasedUserIdProvider>();
+builder.Services.Configure<IdentityOptions>(options => 
+{
+    // User settings
+    options.User.RequireUniqueEmail = true;
+
+    // Sign-in settings
+    options.SignIn.RequireConfirmedAccount = false; 
+});
+
+builder.Services.AddTransient<IUserValidator<HermeAppWebUser>, CustomUsernameEmailPolicy>();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
