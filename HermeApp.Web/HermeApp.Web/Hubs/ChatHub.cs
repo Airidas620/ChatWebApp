@@ -82,15 +82,6 @@ namespace HermeApp.Web.Hubs
             Clients.Others.SendAsync("UserWentOffline", Context.UserIdentifier);
             return base.OnDisconnectedAsync(exception);
         }
-
-
-        /*public async Task CreateAGroup(string groupName)
-        {
-            Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-
-            string response = _GroupManager.CreateAGroup(groupName, Context.UserIdentifier);
-            //Clients.Caller.SendAsync("GroupCreationResponse", response);
-        }*/
     }
 }
 
