@@ -136,7 +136,18 @@ connection.on("ReceiveAGroupMessage", function (groupName, message) {
     }
 });
 
+connection.on("GetYourGroups", function (groups) {
 
+    console.log(groups);
+    groups.forEach(group => {
+        var li = document.createElement("li");
+        li.className = 'group';
+        li.id = group;
+
+        document.getElementById("groupList").appendChild(li);
+        li.textContent = `${group}`;
+    });
+});
 
 ///////////////////////
 

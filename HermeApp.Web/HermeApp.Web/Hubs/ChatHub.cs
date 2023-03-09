@@ -70,6 +70,8 @@ namespace HermeApp.Web.Hubs
             Clients.Caller.SendAsync("GetCurrentOnlineUsers", _IconnectionTracker.GetUsers());
             _IconnectionTracker.UserJoined(Context.UserIdentifier);
 
+            Clients.Caller.SendAsync("GetYourGroups", _GroupManager.GetGroupsUserBelongsTo(Context.UserIdentifier));
+
             Clients.Others.SendAsync("UserWentOnline", Context.UserIdentifier);
 
             return base.OnConnectedAsync();
