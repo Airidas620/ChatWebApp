@@ -2,7 +2,6 @@
 {
     public class UserConnectionTracker : IUserConnectionTracker
     {
-        //remove list at the end
         private HashSet<String> connectedUser;
 
         public UserConnectionTracker() {
