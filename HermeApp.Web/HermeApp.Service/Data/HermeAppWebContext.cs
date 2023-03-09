@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 
-namespace HermeApp.Web.Data;
+namespace HermeApp.Service.Data;
 
 public class HermeAppWebContext : IdentityDbContext<HermeAppWebUser>
 {

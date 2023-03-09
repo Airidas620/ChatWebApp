@@ -1,5 +1,5 @@
 using HermeApp;
-using HermeApp.Web.Data;
+using HermeApp.Service.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
