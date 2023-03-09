@@ -18,11 +18,14 @@ connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
 
     document.getElementById("userList").addEventListener("click", function (e) {
-        if (e.target && e.target.matches("li.user")) {
+        console.log(e.target.className);
+
+        if (e.target && e.target.matches(".list-item")) {
+
+            console.log("dd");
             isSelectionAnUser = true;
 
             selectedUser = e.target.id;
-            document.getElementById("Testing").innerHTML = "you've pressed";
 
             document.getElementById("messagesList").innerHTML = '';
 
@@ -31,35 +34,39 @@ connection.start().then(function () {
                     //SaveText()
 
                     var li = document.createElement("li");
-                    li.className = 'text';
+                    li.className = 'list-message';
 
                     document.getElementById("messagesList").appendChild(li);
 
-                    li.textContent = `${selectedUser}:${message}`;
+                    li.textContent = `${message}`;
                 });
             }
         }
     });
 
     document.getElementById("groupList").addEventListener("click", function (e) {
-        if (e.target && e.target.matches("li.group")) {
+        if (e.target && e.target.matches(".list-item")) {
 
             isSelectionAnUser = false;
 
             console.log(e.target.id)
             selectedUser = e.target.id;
-            document.getElementById("Testing").innerHTML = "you've pressed group";
 
+            console.log(groupChatHistory[selectedUser]);
+
+            
             document.getElementById("messagesList").innerHTML = '';
 
             if (groupChatHistory.hasOwnProperty(selectedUser)) {
                 groupChatHistory[selectedUser].forEach(message => {
+
                     var li = document.createElement("li");
-                    li.className = 'text';
+                    li.className = 'list-message';
 
                     document.getElementById("messagesList").appendChild(li);
 
-                    li.textContent = `${selectedUser}:${message}`;
+                    li.textContent = `${message}`;
+
                 });
             }
 
@@ -73,7 +80,7 @@ connection.start().then(function () {
 connection.on("GetCurrentOnlineUsers", function (users) {
     users.forEach(user => {
         var li = document.createElement("li");
-        li.className = 'user';
+        li.className = 'list-item';
         li.id = user;
 
         document.getElementById("userList").appendChild(li);
@@ -83,7 +90,7 @@ connection.on("GetCurrentOnlineUsers", function (users) {
 
 connection.on("UserWentOnline", function (user) {
     var li = document.createElement("li");
-    li.className = 'user';
+    li.className = 'list-item';
     li.id = user;
 
     document.getElementById("userList").appendChild(li);
@@ -112,7 +119,7 @@ document.getElementById("joinGroup").addEventListener("click", function (event) 
 connection.on("JoinAGroup", function (groupName) {
     console.log("hi");
     var li = document.createElement("li");
-    li.className = 'group';
+    li.className = 'list-item';
     li.id = groupName;
 
     document.getElementById("groupList").appendChild(li);
@@ -141,7 +148,7 @@ connection.on("GetYourGroups", function (groups) {
     console.log(groups);
     groups.forEach(group => {
         var li = document.createElement("li");
-        li.className = 'group';
+        li.className = 'list-item';
         li.id = group;
 
         document.getElementById("groupList").appendChild(li);
@@ -152,7 +159,6 @@ connection.on("GetYourGroups", function (groups) {
 ///////////////////////
 
 connection.on("ReceiveDirectMessage", function (userFrom, userTo, message) {
-    console.log("hi3");
 
     if (userFrom in chatHistory) {
         chatHistory[userFrom].push(message);
@@ -169,8 +175,10 @@ connection.on("ReceiveDirectMessage", function (userFrom, userTo, message) {
 
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
+
     var message = document.getElementById("messageInput").value;
     console.log(currentUser);
+    console.log(selectedUser);
 
     if (selectedUser != null) {
         if (isSelectionAnUser) {
@@ -201,11 +209,11 @@ document.getElementById("sendButton").addEventListener("click", function (event)
             });
 
             //non error proof
-            if (selectedUser in chatHistory) {
-                chatHistory[selectedUser].push(message);
+            if (selectedUser in groupChatHistory) {
+                groupChatHistory[selectedUser].push(message);
             }
             else {
-                chatHistory[selectedUser] = [message];
+                groupChatHistory[selectedUser] = [message];
             }
 
             SaveText("messagesList", message);
@@ -217,7 +225,8 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
 function SaveText(lobby, message) {
     var li = document.createElement("li");
-    li.className = 'text';
+    //li.className = 'text';
+    li.className = 'list-message';
 
     document.getElementById(lobby).appendChild(li);
 

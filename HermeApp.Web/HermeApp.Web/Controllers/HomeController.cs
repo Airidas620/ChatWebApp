@@ -3,6 +3,7 @@ using System.Diagnostics;
 using HermeApp.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using HermeApp.Web.Areas.Identity.Data;
+using HermeApp.Web.AdditionalClasses;
 
 namespace HermeApp.Web.Controllers
 {

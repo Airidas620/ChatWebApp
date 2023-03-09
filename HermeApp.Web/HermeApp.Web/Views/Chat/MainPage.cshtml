@@ -7,25 +7,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - HermeApp.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/HermeApp.Web.styles.css" asp-append-version="true" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width , initial-scale=1.0" />
+    <title>Practice</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body>
     <div class="chat-container">
+        <div class="div1 grid-element1">Hermes</div>
+        <div class="div2 grid-element2">Chat name
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Login", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link btn btn-link text-light border-0">Logout</button>
+            </form>
+        </div>
+        <div class="div3">
 
-            <div class="div1 grid-element1">Hermes</div>
-            <div class="div2 grid-element2">Chat name</div>
-            <div class="div3">
-                <a class="btn">Create chat</a>
-                <a class="btn">another user</a>
-                <a class="btn">another user</a>
-            </div>
-            <div class="div4 grid-element4">Chatbox</div>
+            <input type="text" id="groupInput" />
 
+            <button id="joinGroup">
+                Join or make a group
+            </button>
+
+            <ul class ="no-bullets" id="userList">
+
+            </ul>
+
+            <ul class="no-bullets" id="groupList"></ul>
+
+            
+        </div>
+        <div class="div4 grid-element4">
+            
+            <input class="input" id="messageInput" type="text" placeholder="Write message here.." />
+            <input type="button" id="sendButton" value="Send" />
+
+            <ul id="messagesList" class="no-bullets">
+            </ul>
+
+
+        </div>
     </div>
+    <script src="src/index.js"></script>
 </body>
+<html>
 </html>
+</html>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
