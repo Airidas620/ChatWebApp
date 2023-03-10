@@ -44,7 +44,7 @@ body {
 
 .registration-tooltip {
     color: white;
-    font-size: 10px;
+    font-size: 12px;
     padding: 2px;
 }
 
@@ -66,6 +66,10 @@ a {
 }
 .button {
     margin: 10px;
+}
+button:active {
+    background-color: #2D325A;
+    color: #2D325A;
 }
 .pb-3 {
     margin: auto;
@@ -95,4 +99,10 @@ a {
     color: black;
     margin:auto;
 }
+li {
+    padding: 5px;
+}
 
+.col-md-6 {
+    margin-left: 10%;
+}
