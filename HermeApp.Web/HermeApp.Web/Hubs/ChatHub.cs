@@ -17,17 +17,18 @@ namespace HermeApp.Web.Hubs
 
         public async Task NotifyUserWentOnline(string user)
         {
-            await Clients.Others.SendAsync("UserWentOnline", user);
+            //&& user != Context.UserIdentifier
+            if (!_IconnectionTracker.IsOnline(user) )
+            {
+                _IconnectionTracker.UserJoined(user);
+                await Clients.Others.SendAsync("UserWentOnline", user);
+            }
         }
 
         public async Task NotifyUserWentOffline(string user)
         {
+            _IconnectionTracker.UserLeft(user);
             await Clients.Others.SendAsync("UserWentOffline", user);
-        }
-
-        public async Task NotifyWithCurrentOnlineUsers()
-        {
-            await Clients.Others.SendAsync("GetCurrentOnlineUsers");
         }
 
         public async Task SendDirectMessage(string userFrom, string userTo, string message)
