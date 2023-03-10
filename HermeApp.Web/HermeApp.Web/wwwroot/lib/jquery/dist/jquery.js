@@ -337,7 +337,7 @@ jQuery.extend( {
 	error: function( msg ) {
 		throw new Error( msg );
 	},
-
+		
 	noop: function() {},
 
 	isPlainObject: function( obj ) {
