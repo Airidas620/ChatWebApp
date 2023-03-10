@@ -30,5 +30,10 @@
         {
             return connectedUser;
         }
+
+        public bool IsOnline(string user)
+        {
+            return connectedUser.Contains(user);
+        }
     }
 }

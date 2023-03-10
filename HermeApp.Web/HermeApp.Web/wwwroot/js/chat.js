@@ -21,8 +21,6 @@ connection.start().then(function () {
         console.log(e.target.className);
 
         if (e.target && e.target.matches(".list-item")) {
-
-            console.log("dd");
             isSelectionAnUser = true;
 
             selectedUser = e.target.id;
@@ -31,14 +29,9 @@ connection.start().then(function () {
 
             if (chatHistory.hasOwnProperty(selectedUser)) {
                 chatHistory[selectedUser].forEach(message => {
-                    //SaveText()
 
-                    var li = document.createElement("li");
-                    li.className = 'list-message';
+                    AppendMessageToTheList(message);
 
-                    document.getElementById("messagesList").appendChild(li);
-
-                    li.textContent = `${message}`;
                 });
             }
         }
@@ -60,12 +53,7 @@ connection.start().then(function () {
             if (groupChatHistory.hasOwnProperty(selectedUser)) {
                 groupChatHistory[selectedUser].forEach(message => {
 
-                    var li = document.createElement("li");
-                    li.className = 'list-message';
-
-                    document.getElementById("messagesList").appendChild(li);
-
-                    li.textContent = `${message}`;
+                    AppendMessageToTheList(message);
 
                 });
             }
@@ -79,22 +67,12 @@ connection.start().then(function () {
 
 connection.on("GetCurrentOnlineUsers", function (users) {
     users.forEach(user => {
-        var li = document.createElement("li");
-        li.className = 'list-item';
-        li.id = user;
-
-        document.getElementById("userList").appendChild(li);
-        li.textContent = `${user}`;
+        AppendUserToOnlineList(user);
     });
 });
 
 connection.on("UserWentOnline", function (user) {
-    var li = document.createElement("li");
-    li.className = 'list-item';
-    li.id = user;
-
-    document.getElementById("userList").appendChild(li);
-    li.textContent = `${user}`;
+    AppendUserToOnlineList(user);
 });
 
 connection.on("UserWentOffline", function (user) {
@@ -133,13 +111,9 @@ connection.on("ReceiveAGroupMessage", function (groupName, message) {
     else {
         groupChatHistory[groupName] = [message];
     }
-    console.log(selectedUser);
-    console.log(groupName);
-    console.log(groupName == selectedUser);
-
 
     if (groupName == selectedUser) {
-        SaveText("messagesList", `${selectedUser}: ${message}`);
+        AppendMessageToTheList(message);
     }
 });
 
@@ -168,7 +142,7 @@ connection.on("ReceiveDirectMessage", function (userFrom, userTo, message) {
     }
 
     if (userFrom == selectedUser) {
-        SaveText("messagesList", `${userFrom}: ${ userTo }: ${ message }`);
+        AppendMessageToTheList(message);
     }
 });
 
@@ -194,14 +168,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
                 chatHistory[selectedUser] = [message];
             }
 
-            SaveText("messagesList", message);
-
-            /*var li = document.createElement("li");
-            li.className = 'text';
-    
-            document.getElementById("messagesList").appendChild(li);
-    
-            li.textContent = `${selectedUser}:${message}`;*/
+            AppendMessageToTheList(message);
         }
         else {
             connection.invoke("SendAGroupMessage", selectedUser, message).catch(function (err) {
@@ -216,22 +183,28 @@ document.getElementById("sendButton").addEventListener("click", function (event)
                 groupChatHistory[selectedUser] = [message];
             }
 
-            SaveText("messagesList", message);
+            AppendMessageToTheList(message);
         }
     }
 
     event.preventDefault();
 });
 
-function SaveText(lobby, message) {
+function AppendUserToOnlineList(user) {
     var li = document.createElement("li");
-    //li.className = 'text';
+    li.className = 'list-item';
+    li.id = user;
+
+    document.getElementById("userList").appendChild(li);
+
+    li.textContent = user;
+}
+
+function AppendMessageToTheList(message) {
+    var li = document.createElement("li");
     li.className = 'list-message';
 
-    document.getElementById(lobby).appendChild(li);
+    document.getElementById("messagesList").appendChild(li);
 
     li.textContent = message;
-
-    //li.textContent = user + ": " + message;
-
 }
