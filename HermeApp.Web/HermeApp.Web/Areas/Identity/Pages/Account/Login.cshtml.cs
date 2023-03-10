@@ -129,7 +129,7 @@ namespace HermeApp.Web.Areas.Identity.Pages.Account
                     return Page();
                 }
             }
-            ModelState.AddModelError(string.Empty, "ERROR If we got this far, something failed, redisplay form");
+            //ModelState.AddModelError(string.Empty, "ERROR If we got this far, something failed, redisplay form");
             // If we got this far, something failed, redisplay form
             return Page();
         }
