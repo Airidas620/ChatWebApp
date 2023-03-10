@@ -21,12 +21,19 @@ body {
     background-color: #202442;
 }
 
+p{
+    color: white;
+    font-size: 10px;
+    padding: 2px;
+}
+
 .HermesTitle {
     color: white;
     text-align: center;
     font-size: 96px;
 }
-a{
+
+a {
     color: white;
 }
 .default-title {
