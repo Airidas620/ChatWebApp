@@ -63,4 +63,8 @@ a{
     border: 1px solid;
     border-color: black;
 }
+#change-password-form {
+    color: black;
+    margin:auto;
+}
 
