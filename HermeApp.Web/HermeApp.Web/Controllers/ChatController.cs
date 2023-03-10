@@ -6,7 +6,11 @@ namespace HermeApp.Web.Controllers
     {
         public IActionResult MainPage()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            return Redirect("/Identity/Account/Login");
         }
     }
 }
