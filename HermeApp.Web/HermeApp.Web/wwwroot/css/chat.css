@@ -170,3 +170,6 @@ ul.no-bullets {
         transform: translateY(-0.1rem);
         transition: transform 100ms;
     }
+#ProfileBtn{
+    margin-left: 85%;
+}
