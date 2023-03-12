@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Configuration;
 using HermeApp.Web.Areas.Identity.Services;
 using Microsoft.AspNetCore.Identity;
+using HermeApp.Service.SingnalR;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("HermeAppWebContextConnection") ?? throw new InvalidOperationException("Connection string 'HermeAppWebContextConnection' not found.");
@@ -19,7 +20,7 @@ builder.Services.AddDefaultIdentity<HermeAppWebUser>(options => options.SignIn.R
 
 builder.Services.AddSignalR();
 
-builder.Services.AddSingleton <HermeApp.Web.AdditionalClasses.IGroupManager, GroupManager>();
+builder.Services.AddSingleton <HermeApp.Service.SingnalR.IGroupManager, GroupManager>();
 
 builder.Services.AddSingleton<IUserConnectionTracker, UserConnectionTracker>();
 

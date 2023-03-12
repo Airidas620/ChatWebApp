@@ -1,4 +1,4 @@
-﻿namespace HermeApp.Web.AdditionalClasses
+﻿namespace HermeApp.Service.SingnalR
 {
     public interface IGroupManager
     {

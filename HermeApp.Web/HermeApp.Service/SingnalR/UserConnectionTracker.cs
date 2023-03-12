@@ -1,10 +1,11 @@
-﻿namespace HermeApp.Web.AdditionalClasses
+﻿namespace HermeApp.Service.SingnalR
 {
     public class UserConnectionTracker : IUserConnectionTracker
     {
-        private HashSet<String> connectedUser;
+        private HashSet<string> connectedUser;
 
-        public UserConnectionTracker() {
+        public UserConnectionTracker()
+        {
             connectedUser = new HashSet<string>();
         }
 
@@ -15,12 +16,17 @@
 
         public void UserJoined(string user)
         {
-            connectedUser.Add(user);
+            if (!IsOnline(user))
+                connectedUser.Add(user);
+        }
+        public bool IsOnline(string user)
+        {
+            return connectedUser.Contains(user);
         }
 
         public void UserLeft(string user)
         {
-            if(connectedUser.Count > 0)
+            if (connectedUser.Count > 0)
             {
                 connectedUser.Remove(user);
             }
@@ -31,9 +37,6 @@
             return connectedUser;
         }
 
-        public bool IsOnline(string user)
-        {
-            return connectedUser.Contains(user);
-        }
+
     }
 }

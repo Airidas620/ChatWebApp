@@ -1,5 +1,6 @@
-﻿using HermeApp.Web.AdditionalClasses;
+﻿using HermeApp.Service.SingnalR;
 using Microsoft.AspNetCore.SignalR;
+using NuGet.Protocol.Plugins;
 
 namespace HermeApp.Web.Hubs
 {
@@ -7,42 +8,53 @@ namespace HermeApp.Web.Hubs
     {
         private IUserConnectionTracker _IconnectionTracker;
 
-        private HermeApp.Web.AdditionalClasses.IGroupManager _GroupManager;
+        private Service.SingnalR.IGroupManager _GroupManager;
 
-        public ChatHub(IUserConnectionTracker userConnectionTracker, HermeApp.Web.AdditionalClasses.IGroupManager groupManager): base() 
-        { 
+        public ChatHub(IUserConnectionTracker userConnectionTracker, Service.SingnalR.IGroupManager groupManager) : base()
+        {
             _IconnectionTracker = userConnectionTracker;
             _GroupManager = groupManager;
         }
 
-        public async Task NotifyUserWentOnline(string user)
+        public override Task OnConnectedAsync()
         {
-            //&& user != Context.UserIdentifier
-            if (!_IconnectionTracker.IsOnline(user) )
+            Clients.Caller.SendAsync("GetUserName", Context.UserIdentifier);
+
+            Clients.Caller.SendAsync("GetCurrentOnlineUsers", _IconnectionTracker.GetUsers());
+
+            if (Context.UserIdentifier != null && !_IconnectionTracker.IsOnline(Context.UserIdentifier))
             {
-                _IconnectionTracker.UserJoined(user);
-                await Clients.Others.SendAsync("UserWentOnline", user);
+                _IconnectionTracker.UserJoined(Context.UserIdentifier);
+
+                Clients.Caller.SendAsync("GetYourGroups", _GroupManager.GetGroupsUserBelongsTo(Context.UserIdentifier));
+
+                Clients.Others.SendAsync("UserWentOnline", Context.UserIdentifier);
             }
+
+            return base.OnConnectedAsync();
         }
 
-        public async Task NotifyUserWentOffline(string user)
+        public override Task OnDisconnectedAsync(Exception? exception)
         {
-            _IconnectionTracker.UserLeft(user);
-            await Clients.Others.SendAsync("UserWentOffline", user);
+            if (Context.UserIdentifier != null)
+                _IconnectionTracker.UserLeft(Context.UserIdentifier);
+
+            Clients.Others.SendAsync("UserWentOffline", Context.UserIdentifier);
+
+            return base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendDirectMessage(string userFrom, string userTo, string message)
+        public async Task SendDirectMessage(string sender, string receiver, string message)
         {
-            await Clients.Users(userTo).SendAsync("ReceiveDirectMessage", Context.UserIdentifier, userTo, message);
+            await Clients.Users(receiver).SendAsync("ReceiveDirectMessage", sender, message);
         }
-
 
         public async Task JoinOrCreateAGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
             if (!(_GroupManager.DoesGroupExist(groupName)
-                &&_GroupManager.IsUserInTheGroup(groupName,Context.UserIdentifier)))
+                && _GroupManager.IsUserInTheGroup(groupName, Context.UserIdentifier)))
             {
                 await Clients.Caller.SendAsync("JoinAGroup", groupName);
 
@@ -54,34 +66,9 @@ namespace HermeApp.Web.Hubs
             }
         }
 
-        public async Task SendAGroupMessage(string groupName, string message)
+        public async Task SendAGroupMessage(string groupName, string sender, string message)
         {
-            await Clients.GroupExcept(groupName, Context.ConnectionId).SendAsync("ReceiveAGroupMessage", groupName, message);
-        }
-
-        public override Task OnConnectedAsync()
-        {
-            Clients.Caller.SendAsync("GetCurrentOnlineUsers", _IconnectionTracker.GetUsers());
-
-            if(Context.UserIdentifier != null)
-            {
-                _IconnectionTracker.UserJoined(Context.UserIdentifier);
-
-                Clients.Caller.SendAsync("GetYourGroups", _GroupManager.GetGroupsUserBelongsTo(Context.UserIdentifier));
-
-                Clients.Others.SendAsync("UserWentOnline", Context.UserIdentifier);
-            }
-            
-            return base.OnConnectedAsync();
-        }
-
-        public override Task OnDisconnectedAsync(Exception? exception)
-        {
-            if (Context.UserIdentifier != null)
-                _IconnectionTracker.UserLeft(Context.UserIdentifier);
-
-            Clients.Others.SendAsync("UserWentOffline", Context.UserIdentifier);
-            return base.OnDisconnectedAsync(exception);
+            await Clients.GroupExcept(groupName, Context.ConnectionId).SendAsync("ReceiveAGroupMessage", groupName, sender, message);
         }
     }
 }
