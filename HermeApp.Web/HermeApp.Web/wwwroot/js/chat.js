@@ -13,6 +13,8 @@ var isSelectionAnUser = true;
 var chatHistory = {}
 var groupChatHistory = {}
 
+var directMsg = new Audio('../Sound/DirectMsg.mp3');
+
 class MessageDetails {
     constructor(sender, message) {
         this.sender = sender;
@@ -185,7 +187,7 @@ connection.on("ReceiveDirectMessage", function (sender, message) {
     if (selectedUser != sender) {
         if (!$('#userList').find('#' + sender).hasClass("list-item-unread")) {
             $('#userList').find('#' + sender).toggleClass("list-item-unread");
-            console.log("asd");
+            directMsg.play();
         }
     }
 
