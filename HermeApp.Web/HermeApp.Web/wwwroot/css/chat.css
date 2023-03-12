@@ -195,12 +195,13 @@ ul.no-bullets {
     width: 83%;
     padding: 1%;
 }
+
 #sendButton {
     background-color: #202442;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bolder;
-    font-size: 1.2rem;
-    width: 4rem;
+    font-size: 1.3rem;
+    width: 3.5rem;
     height: 2.5rem;
     text-decoration: none;
     color: white;

@@ -14,6 +14,7 @@
     <title>Hermes</title>
     <link rel="stylesheet" href="~/css/chat.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
     <div class="chat-container">
@@ -43,7 +44,10 @@
             </ul>
             <div id="ChatInputArea">
                 <input class="input" id="messageInput" type="text" autocomplete="off" placeholder="Write message here.." />
-                <input type="button" id="sendButton" value="Send" />
+                @*<input type="button" id="sendButton" value="Send" />*@
+                <button id="sendButton">
+                    <i class="bi bi-send"></i>
+                </button>
             </div>
         </div>
     </div>
