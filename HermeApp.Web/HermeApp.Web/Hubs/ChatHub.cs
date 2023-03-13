@@ -53,7 +53,7 @@ namespace HermeApp.Web.Hubs
         }
 
 
-        public async Task JoinOrCreateAGroup(string groupName)
+        public async Task JoinOrCreateAGroup(string groupName, string userId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
@@ -72,7 +72,7 @@ namespace HermeApp.Web.Hubs
                 int groupId = await _groupRepository.FindGroupIdByName(groupName);
                 UserGroup userGroup = new UserGroup();
                 userGroup.GroupId = groupId;
-                userGroup.UserId = Context.UserIdentifier;
+                userGroup.UserId = userId;
                 await _userGroupRepository.CreateAsync(userGroup);
                 _GroupManager.JoinAGroup(groupName, Context.UserIdentifier);
             }
