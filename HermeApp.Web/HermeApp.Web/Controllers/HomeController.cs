@@ -3,7 +3,7 @@ using System.Diagnostics;
 using HermeApp.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using HermeApp.Web.Areas.Identity.Data;
-using HermeApp.Web.AdditionalClasses;
+using HermeApp.Service.SingnalR;
 
 namespace HermeApp.Web.Controllers
 {
@@ -25,11 +25,6 @@ namespace HermeApp.Web.Controllers
                 return RedirectToAction("MainPage", "Chat");
             }
             return Redirect("/Identity/Account/Login");
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

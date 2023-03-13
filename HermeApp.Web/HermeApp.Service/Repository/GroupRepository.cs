@@ -16,10 +16,25 @@ namespace HermeApp
             _context = context;
         }
 
-        public async Task<int> FindGroupIdByName(string groupName)
+        public async Task<Group> FindGroupIdByName(string groupName)
         {
             var group = await _context.Groups.FirstOrDefaultAsync(g => g.GroupName == groupName);
-            return group.GroupId;
+            return group;
+        }
+
+        public async Task<List<Group>> GetAllGroups(string userId)
+        {
+            var groupIds = await _context.UserGroups
+                        .Where(ug => ug.UserId == userId)
+                        .Select(ug => ug.GroupId)
+                        .ToListAsync();
+
+            // Select all groups from the Group table using the group IDs
+            var groups = await _context.Groups
+                .Where(g => groupIds.Contains(g.GroupId))
+                .ToListAsync();
+
+            return groups;
         }
     }
 }
