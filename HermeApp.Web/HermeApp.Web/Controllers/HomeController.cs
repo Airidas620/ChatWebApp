@@ -27,11 +27,6 @@ namespace HermeApp.Web.Controllers
             return Redirect("/Identity/Account/Login");
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
