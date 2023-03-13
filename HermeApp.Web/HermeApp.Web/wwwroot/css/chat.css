@@ -186,9 +186,6 @@ ul.no-bullets {
         transform: translateY(-0.1rem);
         transition: transform 100ms;
     }
-#ProfileBtn{
-    margin-left: 85%;
-}
 #ChatInputArea {
     position: absolute;
     bottom: 2%;
@@ -200,9 +197,10 @@ ul.no-bullets {
     background-color: #202442;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bolder;
-    font-size: 1.3rem;
-    width: 3.5rem;
-    height: 2.5rem;
+    font-size: 1vw;
+    padding: 1%;
+    padding-top: 0.5%;
+    padding-bottom: 0.7%;
     text-decoration: none;
     color: white;
     border-radius: 10px;
@@ -211,3 +209,63 @@ ul.no-bullets {
     margin: 1%;
     height: 90%;
     overflow-y: auto;
+}
+#userList {
+    margin: 1%;
+    height: 90%;
+    width: 90%;
+    font-size: 0.1rem;
+    overflow-y: auto;
+}
+    #userList li {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 85%;
+        display: inline-block;
+    }
+#groupList {
+    margin: 1%;
+    height: 90%;
+    width: 90%;
+    font-size: 0.1rem;
+    overflow-y: auto;
+}
+    #groupList li {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 85%;
+        display: inline-block;
+    }
+#joinGroup {
+    width: 95%;
+    margin-bottom: 3%;
+}
+/* For webkit browsers */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 5px;
+}
+
+/* For Firefox browsers */
+ul {
+    scrollbar-width: thin;
+    scrollbar-color: white transparent;
+}
+#groupInput {
+    height: 9.5%;
+    width: 90%;
+    margin-bottom: 6%;
+}
+#ChatHermesTitle {
+    font-size: 3vw;
+}
