@@ -1,4 +1,5 @@
 ﻿using HermeApp.Web.AdditionalClasses;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 
 namespace HermeApp.Web.Hubs
@@ -6,13 +7,22 @@ namespace HermeApp.Web.Hubs
     public class ChatHub : Hub
     {
         private IUserConnectionTracker _IconnectionTracker;
-
+        private GroupRepository _groupRepository;
+        private MessageRepository _messageRepository;
+        private UserGroupRepository _userGroupRepository;
+        private UserRepository _userRepository;
         private HermeApp.Web.AdditionalClasses.IGroupManager _GroupManager;
 
-        public ChatHub(IUserConnectionTracker userConnectionTracker, HermeApp.Web.AdditionalClasses.IGroupManager groupManager): base() 
-        { 
+        public ChatHub(IUserConnectionTracker userConnectionTracker, HermeApp.Web.AdditionalClasses.IGroupManager groupManager,
+            GroupRepository groupRepository, MessageRepository messageRepository, UserGroupRepository userGroupRepository,
+            UserRepository userRepository, UserManager<IdentityUser> userManager) : base()
+        {
             _IconnectionTracker = userConnectionTracker;
             _GroupManager = groupManager;
+            _groupRepository = groupRepository;
+            _userGroupRepository = userGroupRepository;
+            _userRepository = userRepository;
+            _messageRepository = messageRepository;
         }
 
         public async Task NotifyUserWentOnline(string user)
@@ -33,6 +43,12 @@ namespace HermeApp.Web.Hubs
 
         public async Task SendDirectMessage(string userFrom, string userTo, string message)
         {
+            Message _message = new Message();
+            _message.SenderId = userFrom;
+            _message.ReceiverId = userTo;
+            _message.MessageText = message;
+            _message.Timestamp = DateTime.Now;
+            await _messageRepository.CreateAsync(_message);
             await Clients.Users(userTo).SendAsync("ReceiveDirectMessage", Context.UserIdentifier, userTo, message);
         }
 
@@ -48,14 +64,29 @@ namespace HermeApp.Web.Hubs
 
                 if (!_GroupManager.DoesGroupExist(groupName))
                 {
+                    Group _group = new Group();
+                    _group.GroupName = groupName;
+                    await _groupRepository.CreateAsync(_group);
                     _GroupManager.CreateAGroup(groupName);
                 }
+                int groupId = await _groupRepository.FindGroupIdByName(groupName);
+                UserGroup userGroup = new UserGroup();
+                userGroup.GroupId = groupId;
+                userGroup.UserId = Context.UserIdentifier;
+                await _userGroupRepository.CreateAsync(userGroup);
                 _GroupManager.JoinAGroup(groupName, Context.UserIdentifier);
             }
         }
 
-        public async Task SendAGroupMessage(string groupName, string message)
+        public async Task SendAGroupMessage(string groupName, string userFrom, string message)
         {
+            int? groupId = await _groupRepository.FindGroupIdByName(groupName);
+            Message _message = new Message();
+            _message.SenderId = userFrom;
+            _message.MessageText = message;
+            _message.GroupId = groupId;
+            _message.Timestamp = DateTime.Now;
+            await _messageRepository.CreateAsync(_message);
             await Clients.GroupExcept(groupName, Context.ConnectionId).SendAsync("ReceiveAGroupMessage", groupName, message);
         }
 

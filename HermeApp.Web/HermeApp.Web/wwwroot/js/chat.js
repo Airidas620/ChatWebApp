@@ -82,7 +82,7 @@ connection.on("UserWentOffline", function (user) {
 ///////////////////////
 document.getElementById("joinGroup").addEventListener("click", function (event) {
     var groupName = document.getElementById("groupInput").value;
-
+    debugger
     //if (selectedUser != null) {
         connection.invoke("JoinOrCreateAGroup", groupName).catch(function (err) {
             return console.error(err.toString());
@@ -171,7 +171,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
             AppendMessageToTheList(message);
         }
         else {
-            connection.invoke("SendAGroupMessage", selectedUser, message).catch(function (err) {
+            connection.invoke("SendAGroupMessage", currentUser, selectedUser, message).catch(function (err) {
                 return console.error(err.toString());
             });
 

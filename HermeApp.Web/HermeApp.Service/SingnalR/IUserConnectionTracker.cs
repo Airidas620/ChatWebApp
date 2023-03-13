@@ -7,7 +7,6 @@
         public void UserLeft(string user);
 
         public HashSet<String> GetUsers();
-
-        public bool IsOnline(string user);
+        bool IsOnline(string user);
     }
 }
