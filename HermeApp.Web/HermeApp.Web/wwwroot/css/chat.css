@@ -130,14 +130,25 @@ ul.no-bullets {
     color: white;
     padding: 5%;
     border-radius: 10px;
+    overflow-wrap: break-word;
+    border: 3px solid transparent;
 }
 
-    .list-item:hover {
-        cursor: pointer;
-        background-color: #2b4691;
-        transform: translateY(-0.1rem);
-        transition: transform 100ms;
-    }
+.list-item:hover {
+    cursor: pointer;
+    background-color: #2b4691;
+    transform: translateY(-0.1rem);
+    transition: transform 100ms;
+}
+
+.list-item-selected {
+    background-color: #2b4691;
+}
+
+.list-item-unread {
+    border-color: #cd2c61;
+}
+
 
 .list-message {
     background-color: #202442;
@@ -184,12 +195,13 @@ ul.no-bullets {
     width: 83%;
     padding: 1%;
 }
+
 #sendButton {
     background-color: #202442;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bolder;
-    font-size: 1.2rem;
-    width: 4rem;
+    font-size: 1.3rem;
+    width: 3.5rem;
     height: 2.5rem;
     text-decoration: none;
     color: white;

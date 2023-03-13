@@ -1,10 +1,12 @@
-﻿namespace HermeApp.Web.AdditionalClasses
+﻿
+namespace HermeApp.Service.SingnalR
 {
     public class GroupManager : IGroupManager
     {
         Dictionary<string, HashSet<string>> groups;
 
-        public GroupManager() { 
+        public GroupManager()
+        {
             groups = new Dictionary<string, HashSet<string>>();
         }
 
