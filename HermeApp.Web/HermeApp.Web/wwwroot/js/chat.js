@@ -253,9 +253,9 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
 document.getElementById("joinGroup").addEventListener("click", function (event) {
     var groupName = document.getElementById("groupInput").value;
-
+    debugger;
     if (groupName) {
-        connection.invoke("JoinOrCreateAGroup", groupName).catch(function (err) {
+        connection.invoke("JoinOrCreateAGroup", groupName, currentUser).catch(function (err) {
             return console.error(err.toString());
         });
     }

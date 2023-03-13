@@ -26,6 +26,14 @@ builder.Services.AddSingleton<IUserConnectionTracker, UserConnectionTracker>();
 
 builder.Services.AddSingleton<IUserIdProvider, EmailBasedUserIdProvider>();
 
+builder.Services.AddScoped<GroupRepository>();
+
+builder.Services.AddScoped<UserRepository>();
+
+builder.Services.AddScoped<MessageRepository>();
+
+builder.Services.AddScoped<UserGroupRepository>();
+
 builder.Services.Configure<IdentityOptions>(options => 
 {
     // User settings
