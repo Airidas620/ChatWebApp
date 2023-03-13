@@ -269,3 +269,9 @@ ul {
 #ChatHermesTitle {
     font-size: 3vw;
 }
+#chatName {
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
